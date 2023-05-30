@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/search_view.dart';
+import 'package:flutter_application/search_view.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
 
