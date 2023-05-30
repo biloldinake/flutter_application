@@ -13,10 +13,10 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-num? temp;
 double kelvin = 0;
 String cliner = '';
 String city = '';
+double temp = 0;
 
 class _HomeViewState extends State<HomeView> {
   @override
@@ -32,8 +32,8 @@ class _HomeViewState extends State<HomeView> {
     final Vremya = await client.get(uri);
     final jsonAnswer = jsonDecode(Vremya.body);
     city = jsonAnswer['name'].toString();
-    double kelvin = jsonAnswer['main']['temp'];
-    final temp = (kelvin - 273.15).toStringAsFixed(0);
+    temp = jsonAnswer['main']['temp'];
+
     log('kelvin===>$kelvin');
     log('temp===>${temp.toString()}');
     cliner = jsonAnswer['sys']['country'];
@@ -43,17 +43,17 @@ class _HomeViewState extends State<HomeView> {
     setState(() {});
   }
 
-  Future<void> getTypedCity(String cityName) async {
+  Future<void> getTypedCity({String? cityName}) async {
     final client = Client();
     final apiUrkl =
-        'https://api.openweathermap.org/data/2.5/weather?q=$cityName&appid=6a6cd3e2d7dcabffe0761fb8419321a8 ';
+        'https://api.openweathermap.org/data/2.5/weather?q=$cityName&appid=6a6cd3e2d7dcabffe0761fb8419321a8&units=metric';
     final uri = Uri.parse(apiUrkl);
     final Vremya = await client.get(uri);
     final jsonAnswer = jsonDecode(Vremya.body);
     city = jsonAnswer['name'].toString();
     temp = jsonAnswer['main']['temp'];
-
     cliner = jsonAnswer['sys']['country'];
+    setState(() {});
     log('city===>$city');
     log('cliner==>$cliner');
     // log('$city');
@@ -105,9 +105,10 @@ class _HomeViewState extends State<HomeView> {
           ),
           actions: [
             IconButton(
-              onPressed: () {
-                Navigator.push(context,
+              onPressed: () async {
+                var result = await Navigator.push(context,
                     MaterialPageRoute(builder: (context) => searchview()));
+                getTypedCity(cityName: result);
               },
               icon: Icon(
                 Icons.location_city,
@@ -133,7 +134,7 @@ class _HomeViewState extends State<HomeView> {
                 top: 80,
                 left: 50,
                 child: Text(
-                  '${temp!.toStringAsFixed(0)}\u00B0⛅',
+                  '${temp.toStringAsFixed(0)}°C⛅',
                   style: TextStyle(fontSize: 50),
                 ),
               ),

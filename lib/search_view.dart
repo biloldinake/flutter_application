@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 class searchview extends StatefulWidget {
-  const searchview({super.key});
+   searchview({super.key});
 
+  
   @override
   State<searchview> createState() => _searchviewState();
+  
 }
 
 class _searchviewState extends State<searchview> {
+  TextEditingController controller=TextEditingController();
   @override
-  
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -27,6 +29,8 @@ class _searchviewState extends State<searchview> {
             child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: TextFormField(
+            controller: controller,
+
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white),
             keyboardType: TextInputType.text,
@@ -34,7 +38,7 @@ class _searchviewState extends State<searchview> {
               suffixIcon: IconButton(
                 onPressed: () {
                   FocusScope.of(context).unfocus();
-                  Navigator.pop(context);
+                  Navigator.pop(context,controller.text);
                 },
                 icon: Icon(
                   Icons.skip_next_outlined,
