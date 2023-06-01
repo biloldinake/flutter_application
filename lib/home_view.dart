@@ -43,6 +43,8 @@ class _HomeViewState extends State<HomeView> {
     setState(() {});
   }
 
+
+
   Future<void> getTypedCity({String? cityName}) async {
     final client = Client();
     final apiUrkl =
