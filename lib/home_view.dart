@@ -28,7 +28,7 @@ class _HomeViewState extends State<HomeView> {
   Future<dynamic> abayirainAlipKel(Position position) async {
     var client = Client();
     Uri uri = Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?lat=${position.latitude}&lon=${position.longitude}&appid=6a6cd3e2d7dcabffe0761fb8419321a8&units=metric');
+        'https://api.openweathermap.org/data/2.5/weather?lat=${position.latitude}&lon=${position.longitude}&appid=6a6cd3e2d7dcabffe0761fb8419321a8&units=metric' );
     final Vremya = await client.get(uri);
     final jsonAnswer = jsonDecode(Vremya.body);
     city = jsonAnswer['name'].toString();
@@ -62,7 +62,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   showWeatherData() async {
-    final position = await getPosition();
+    final position = await  getPosition();
     abayirainAlipKel(position);
     log('latitude ====> ${position.latitude}');
     log('longitude ====> ${position.longitude}');
